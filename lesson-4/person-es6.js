@@ -14,9 +14,11 @@ class Person extends EventEmitter {
     speaks = function () {
         console.log(this.name);
     }
-    says = function() {
-        this.emit(action, this.name);
-    }
+
+}
+
+Person.prototype.says = function() {
+    this.emit(action, this.name);
 }
 
 let bill = new Person('Bill');
