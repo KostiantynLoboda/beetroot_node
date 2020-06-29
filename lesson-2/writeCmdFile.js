@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-let fileName = process.argv[2];
-let fileContent = process.argv[3];
+let fileName = process.argv[3];
+let fileContent = process.argv[5];
 
 fs.stat(fileName, (err, stats) => {
     if (err) {
