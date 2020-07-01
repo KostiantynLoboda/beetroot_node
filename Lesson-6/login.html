@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>login form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<style>
+    .login-root {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-size: 1em;
+        font-family: 'Open Sans', sans-serif;
+        color: #8A8A8A;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+    .login-wrap {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        height: auto;
+        background: #FFF;
+        border: 1px solid #f3f3f3;
+    }
+    .login-button-wrap {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    .thank-you-page {
+        text-align: center;
+    }
+    .input-wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2.8em;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+    fieldset.hidden {
+        opacity: 0;
+        height: 0;
+        padding: 0;
+        visibility: hidden;
+    }
+    fieldset {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        border: none;
+        padding: 1em 0;
+        width: 24em;
+        opacity: 1;
+        height: auto;
+        visibility: visible;
+        -webkit-transition: visibility 1s linear, height 1s linear, opacity 1s linear;
+        -o-transition: visibility 1s linear, height 1s linear, opacity 1s linear;
+        transition: visibility 1s linear, height 1s linear, opacity 1s linear;
+    }
+    legend {
+        font-weight: 600;
+        text-align: center;
+        padding: 2em 0 0.8em 0;
+        margin: auto;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        background-color: #FFF !important;
+        background-image: none !important;
+        width: 24em;
+        padding-left: 0.8em;
+        font-family: 'Open Sans', sans-serif;
+        margin: 0 auto;
+        height: 2em;
+        color: #8A8A8A !important;
+        border: 1px solid #8A8A8A;
+        -webkit-box-shadow: inset 0 0 0 50px #fff;
+        -webkit-text-fill-color: #8A8A8A;
+    }
+    input[type="button"] {
+        width: auto;
+        background: #3C8DBC;
+        color: #FFF;
+        margin: 0.2em;
+        border: none;
+        padding: 1em 1.2em;
+        font-family: Georgia, Arial, sans-serif;
+        cursor: pointer !important;
+        -webkit-transition: all .1s linear;
+        -o-transition: all .1s linear;
+        transition: all .1s linear;
+    }
+    input[type="button"]:active {
+        -webkit-box-shadow: 0 1px 0 #006599;
+        box-shadow: 0 1px 0 #006599;
+        -webkit-transform: translateY(0.2em);
+        -ms-transform: translateY(0.2em);
+        transform: translateY(0.2em);
+    }
+    select {
+        width: 25em;
+        padding-left: 0.8em;
+        font-family: 'Open Sans', sans-serif;
+        margin: 0 auto;
+        height: 2.3em;
+        color: #8A8A8A;
+    }
+    select[disabled] {
+        background: #8a8a8a26;
+    }
+</style>
+<div class="login-root">
+    <div class="login-wrap">
+        <div name="login">
+            <fieldset name="first-step" class="first-step">
+                <legend>Register a new user</legend>
+                <div class="input-wrapper">
+                    <input type="text" name="login" placeholder="Login*">
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" name="password" placeholder="Password*">
+                </div>
+                <div class="login-button-wrap">
+                    <button id="btn" class="next">Login</button>
+                </div>
+            </fieldset>
+            <div id="success" name="success" class="thank-you-page"></div>
+        </div>
+    </div>
+</div>
+<script>
+    const url = 'http://localhost:3000/isLoggedIn';
+    const button = document.getElementById('btn');
+    const success = document.getElementById('success');
+    const login = document.getElementsByName('login')[1];
+    const password = document.getElementsByName('password')[0];
+
+    async function handleData() {
+        const user = {
+            login: login.value,
+            password: password.value,
+        };
+        response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: user.login,
+                password: user.password,
+            })
+        });
+        const content = await response.text();
+        success.innerHTML = content;
+    }
+    button.addEventListener('click', handleData, false);
+</script>
+</body>
+</html>
